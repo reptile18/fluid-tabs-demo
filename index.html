@@ -1,0 +1,164 @@
+<html>
+  <head>
+    <script
+  src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+  integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
+  crossorigin="anonymous"></script>
+    <style>
+.container {
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+}
+.flexItem:nth-child(n+2) {
+  border-left: 1px solid gray;
+}
+.flexItem {
+  background-color: whitesmoke;
+}
+.flexItemUnselected {
+  /* flex-shrink: 1; */
+  /*flex-shrink: 8;
+  font-size: 1em;*/
+  width: 15%;
+  animation-name: collapse;
+  animation-duration: 1s;
+  animation-fill-mode: backwards;
+}
+
+/*Comment out to hide text from unselected */
+.flexItemUnselected .componentContent {
+  opacity: 0;
+}
+.flexItemSelected {
+  /* flex-shrink: 1; */
+  /*flex-shrink: 1;
+  flex-basis: 50%;*/
+  font-size: 2em;
+  width: 55%; 
+  animation-name: expand;
+  animation-duration: 1s;
+  animation-fill-mode: backwards;
+
+}
+
+.flexItemSelected .componentContent {
+
+  animation-name: showContent;
+  animation-delay: 1s;
+  animation-fill-mode: backwards;
+}
+
+.imgContainer {
+  width: 100%;
+
+}
+img {
+  margin: 0 auto;
+  display: block;
+  width: 50%;
+}
+img:hover {
+  border-radius: 50%;
+  border: 2px solid black;
+  cursor: pointer;
+}
+.flexItemSelected .componentContent {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+@keyframes expand {
+  from {width: 15%}
+  to {width: 55%}
+}
+@keyframes collapse {
+  from {width: 55%}
+  to {width: 15%}
+}
+
+@keyframes showContent {
+  0% {opacity: 0}
+  25% {opacity: 0.25}
+  50% {opacity: 0.5}
+  75% {opacity: 0.75}
+  100% {opacity: 1.0}
+
+}
+
+    </style>
+  </head>
+  <body>
+    <main id="componentContainer" class="container">
+      
+    </main>
+    
+    <script type="text/javascript">
+      
+      const items = [
+        {
+          name: "Crowding",
+          id: "componentCrowding",
+          img: "Risk_Crowding-filled.svg",
+          content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error facere dolores blanditiis sed veritatis quis necessitatibus, eos fugit nam eius ipsam nesciunt dolorum ea nisi fugiat incidunt voluptatibus sit eaque."
+        },
+        {
+          name: "Droplets",
+          id: "componentDroplets",
+          img: "Risk_Droplets-filled.svg",
+          content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error facere dolores blanditiis sed veritatis quis necessitatibus, eos fugit nam eius ipsam nesciunt dolorum ea nisi fugiat incidunt voluptatibus sit eaque."
+        },
+        {
+          name: "Time",
+          id: "componentTime",
+          img: "Risk_Time-filled.svg",
+          content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error facere dolores blanditiis sed veritatis quis necessitatibus, eos fugit nam eius ipsam nesciunt dolorum ea nisi fugiat incidunt voluptatibus sit eaque."
+        },
+        {
+          name: "Ventilation",
+          id: "componentVentilation",
+          img: "Risk_Ventilation-filled.svg",
+          content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error facere dolores blanditiis sed veritatis quis necessitatibus, eos fugit nam eius ipsam nesciunt dolorum ea nisi fugiat incidunt voluptatibus sit eaque."
+        }
+      ];
+
+      function buildTabs() {
+        const container = $("#componentContainer");
+        console.log(container);
+        items.forEach((component) => {
+          //console.log(component);
+          const img = $("<img>").attr("src",component.img).attr("alt",component.name);
+          const imgContainer = $("<div>").addClass("imgContainer").append(img)
+          const content = $("<div>").text(component.content).addClass("componentContent");
+          const componentDiv = $("<div>").attr("id",component.id).addClass("flexItemUnselected flexItem").append(imgContainer,content);
+          $(container).append(componentDiv);
+        });
+      }
+      buildTabs();
+
+      let selectedItem = $("#componentCrowding");
+      $(selectedItem).toggleClass("flexItemSelected");
+      $(selectedItem).toggleClass("flexItemUnselected");
+
+      //const itemIDss = ["componentCrowding","componentDroplets","componentTime","componentVentilation"];
+      //itemIDss.forEach(itemID => document.getElementById(itemID).addEventListener("click",onFlexItemClick));
+      $("img").on("click",onFlexItemClick);
+
+      function onFlexItemClick(event) {
+        if (selectedItem) {
+          $(selectedItem).toggleClass("flexItemSelected");
+          $(selectedItem).toggleClass("flexItemUnselected");
+        }
+
+        selectedItem = $(event.target).hasClass("flexItem") ? event.target : $(event.target).parents(".flexItem");
+        console.log(selectedItem);
+        if (!$(selectedItem).length) {
+          console.log("event.target",event.target);
+        }
+
+        $(selectedItem).toggleClass("flexItemSelected");
+        $(selectedItem).toggleClass("flexItemUnselected");
+      }
+    </script>
+  </body>
+</html>
