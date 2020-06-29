@@ -87,15 +87,28 @@ img:hover {
   50% {opacity: 0.5}
   75% {opacity: 0.75}
   100% {opacity: 1.0}
-
 }
-
+/* CUSTOMIZE FORM */
+.customize {
+  float:right;
+  position: fixed;
+  top: 1em;
+  right: 1em;
+}
     </style>
   </head>
   <body>
     <main id="componentContainer" class="container">
       
     </main>
+
+    <aside class="customize">
+      <label for="inputAnimSpeed">Animation speed:</label>
+      <input type="number" id="inputAnimSpeed" value=500 /> ms
+      <br>
+      <label for="inputSelectedItemWidth">Selected item width:</label>
+      <input type="number" id="inputSelectedItemWidth" value=55 /> %
+    </aside>
     
     <script type="text/javascript">
       
@@ -155,14 +168,21 @@ img:hover {
         }
 
         selectedItem = $(event.target).hasClass("flexItem") ? event.target : $(event.target).parents(".flexItem");
-        console.log(selectedItem);
         if (!$(selectedItem).length) {
-          console.log("event.target",event.target);
         }
 
         $(selectedItem).toggleClass("flexItemSelected");
         $(selectedItem).toggleClass("flexItemUnselected");
       }
+    </script>
+    <script type="text/javascript">
+      $("#inputAnimSpeed").on("change",(event) => {
+        $("main").css("--animation-speed",$(event.target).val() + "ms");
+      });
+      $("#inputSelectedItemWidth").change(event => {
+        console.log("new width: ",$(event.target).val());
+        $("main").css("--selected-item-width",$(event.target).val() + "%");
+      });
     </script>
   </body>
 </html>
