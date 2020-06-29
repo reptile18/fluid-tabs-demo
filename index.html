@@ -7,6 +7,8 @@
     <style>
 .container {
   --animation-speed: 500ms;
+  --selected-item-width: 55%;
+  --unselected-items-width: calc((100% - var(--selected-item-width))/3);
   width: 50%;
   height: 100%;
   display: flex;
@@ -22,7 +24,7 @@
   /* flex-shrink: 1; */
   /*flex-shrink: 8;
   font-size: 1em;*/
-  width: 15%;
+  width: var(--unselected-items-width);
   animation-name: collapse;
   animation-duration: var(--animation-speed);
   animation-fill-mode: backwards;
@@ -37,7 +39,7 @@
   /*flex-shrink: 1;
   flex-basis: 50%;*/
   font-size: 2em;
-  width: 55%; 
+  width: var(--selected-item-width); 
   animation-name: expand;
   animation-duration: var(--animation-speed);
   animation-fill-mode: backwards;
@@ -71,12 +73,12 @@ img:hover {
 }
 
 @keyframes expand {
-  from {width: 15%}
-  to {width: 55%}
+  from {width: var(--unselected-items-width)}
+  to {width: var(--selected-item-width)}
 }
 @keyframes collapse {
-  from {width: 55%}
-  to {width: 15%}
+  from {width: var(--selected-item-width)}
+  to {width: var(--unselected-items-width)}
 }
 
 @keyframes showContent {
